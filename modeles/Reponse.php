@@ -3,10 +3,10 @@ require_once "Modele.php";
 
 class Reponse extends Modele
 {
-    private $idReponse;
-    private $idQuestion;
-    private $reponse;
-    private $verification;
+    private $idReponse; //Int
+    private $idQuestion; // String
+    private $reponse; // Array
+    private $verification; //Bool
 
     public function __construct($idRep = null)
     {
@@ -45,5 +45,20 @@ class Reponse extends Modele
     public function getVerification()
     {
         return $this -> verification;
+    }
+
+    public function setIdReponse()
+    {
+
+    }
+
+    public function setReponse()
+    {
+
+    }
+
+    public function setVrai()
+    {
+        
     }
 }

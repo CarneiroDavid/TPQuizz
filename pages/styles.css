@@ -1,0 +1,15 @@
+h1
+{
+    color:red;
+}
+
+.container
+{
+    max-width: 80%;
+}
+
+#box
+{
+    background-color: red;
+    text-decoration: underline;
+}

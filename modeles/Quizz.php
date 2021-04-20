@@ -10,7 +10,8 @@ class Quizz extends Modele
 
     public function __construct($idQuizz = null)
     {
-        if($idQuizz !== null){
+        if($idQuizz !== null)
+        {
 
             $requete = $this->getBdd()->prepare("SELECT titre, idCategorie FROM quizz WHERE idQuizz = ?");
             $requete->execute([$idQuizz]);
@@ -51,5 +52,24 @@ class Quizz extends Modele
     public function getQuestions()
     {
         return $this -> questions;
+    }
+
+    public function setIdQuizz()
+    {
+
+    }
+    public function setTitre()
+    {
+
+    }
+
+    public function addQuestion()
+    {
+
+    }
+
+    public function removeQuestion()
+    {
+        
     }
 }

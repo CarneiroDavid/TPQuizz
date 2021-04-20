@@ -4,6 +4,7 @@ class Categorie extends Modele
 {
     private $idCategorie;
     private $nom;
+    private $quizz = [];
 
     public function __construct($idCat = null)
     {
@@ -18,6 +19,24 @@ class Categorie extends Modele
         }
     }
 
+    public function recupQuizz($idCat)
+    {
+        $requete = $this -> getBdd() ->prepare("SELECT * FROM quizz WHERE idCategorie = ?");
+        $requete -> execute([$idCat]);
+        $quizzs = $requete -> fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($quizzs as $Quizz)
+        {
+            $objetQuizz = new Quizz($Quizz["idQuizz"]);
+            $this -> quizz[] = $objetQuizz;
+        }
+    }
+
+    public function getListQuizz()
+    {
+        return $this -> quizz;
+    }
+
     public function getIdCat()
     {
         return $this -> idCategorie;
@@ -27,5 +46,4 @@ class Categorie extends Modele
     {
         return $this -> nom;
     }
-
 }

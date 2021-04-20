@@ -7,7 +7,7 @@ class Question extends Modele
     private $idQuestion;
     private $titre;
     private $reps = [];
-    // private question = [;]
+    // private question = [];
 
     public function __construct($idQuestion = null)
     {
@@ -35,6 +35,7 @@ class Question extends Modele
             // print_r($this->reps);
         }
     }
+
     public function initialiserQuestion($idQuestion, $Titre)
     {
         $this -> idQuestion = $idQuestion;
@@ -50,8 +51,9 @@ class Question extends Modele
             $objetReponse -> initialiserReponse($y["idQuestion"], $y["reponse"], $y["verification"]);
             $this -> reps[] = $objetReponse;       
         }
-
     }
+    // public function 
+
     public function getIdQuizz()
     {
         return $this -> idQuizz;
@@ -69,4 +71,24 @@ class Question extends Modele
     {
         return $this -> reps;
     }
+
+    public function setIdQuestion($idQuestion)
+    {
+
+    }
+
+    public function setQuestion($question)
+    {
+
+    }
+
+    public function addReponse($Reponse)
+    {
+
+    } 
+
+    public function removeReponse($idReponse)
+    {
+
+    } 
 }
