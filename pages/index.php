@@ -84,9 +84,15 @@ require_once "entete.php";
                 
                     
                         <h1><?=$question ->getTitre();?></h1>
+                        <pre>
                         <?php
-                        foreach($question -> getReps() as $reponse)
+                        // print_r($question);
+                        ?></pre><?php
+                        $reps = $question -> getReps();
+                        shuffle($reps);
+                        foreach($reps as $reponse)
                         {
+                            // shuffle($reponse); 
                             ?>
                             <button onclick="nextQuestion(<?=$i;?>,this.value)" value="<?=$reponse -> getIdReponse();?>"><?=$reponse -> getReponse();?></button>
                             <?php
@@ -99,7 +105,7 @@ require_once "entete.php";
                 {
                     ?>
                     <div id="question<?=$i+1;?>" style="display:none;">
-                        <form method="post" action="resultat.php">
+                        <form method="post" action="../traitements/resultat.php">
                     <?php
                     $a = 1;
                         foreach($listQuestion as $x)
