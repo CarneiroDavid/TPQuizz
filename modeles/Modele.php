@@ -14,3 +14,4 @@ require_once "Quizz.php";
 require_once "Reponse.php";
 require_once "QuestionSecrete.php";
 require_once "../Application.php";
+require_once "Selectionner.php";

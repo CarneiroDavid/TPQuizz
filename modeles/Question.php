@@ -25,12 +25,13 @@ class Question extends Modele
             $this->idQuizz = $r["idQuizz"];
             $this->titre = $r["Titre"];
 
-            
+            $i = 1;
             foreach($x as $y)
             {
                 $Reponse = new Reponse($y["idReponse"]);
 
-                $this->reps[] = $Reponse;
+                $this->reps[$i] = $Reponse;
+                $i++;
             }
             // print_r($this->reps);
         }
@@ -45,11 +46,13 @@ class Question extends Modele
         $requete ->execute([$idQuestion]);
         $x = $requete -> fetchAll(PDO::FETCH_ASSOC);
 
+        $i = 1;
         foreach($x as $y)
         {
             $objetReponse = new Reponse();
-            $objetReponse -> initialiserReponse($y["idQuestion"], $y["reponse"], $y["verification"]);
-            $this -> reps[] = $objetReponse;       
+            $objetReponse -> initialiserReponse($y["idReponse"], $y["idQuestion"], $y["reponse"], $y["verification"]);
+            $this -> reps[$i] = $objetReponse;  
+            $i++;     
         }
     }
     // public function 

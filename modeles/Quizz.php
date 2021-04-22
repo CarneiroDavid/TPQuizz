@@ -24,12 +24,13 @@ class Quizz extends Modele
             $this->idQuizz = $idQuizz;
             $this->titre  = $infos["titre"];
             $this->categorie = new Categorie($infos["idCategorie"]);          
-
+            $i = 1;
             foreach ( $questions as $question )
             {
                 $objetQuestion = new Question();
                 $objetQuestion -> initialiserQuestion($question["idQuestion"], $question["Titre"]);
-                $this -> questions[] = $objetQuestion;
+                $this -> questions[$i] = $objetQuestion;
+                $i++;
             }
         }
     }

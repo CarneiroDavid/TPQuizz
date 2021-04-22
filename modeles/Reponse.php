@@ -24,8 +24,9 @@ class Reponse extends Modele
         
 
     }
-    public function initialiserReponse($idQuestion, $reponse, $verif)
+    public function initialiserReponse($idReponse, $idQuestion, $reponse, $verif)
     {
+        $this -> idReponse = $idReponse;
         $this -> idQuestion = $idQuestion;
         $this -> reponse = $reponse;
         $this -> verification = $verif;
