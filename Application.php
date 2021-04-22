@@ -17,7 +17,7 @@ class Application extends Modele
     {
         $requete = $this -> getBdd() -> prepare("SELECT * FROM quizz");
         $requete -> execute();
-        $allCat = $requete -> fetchAll(PDO::FETCH_ASSOC);
+        $allQuizz = $requete -> fetchAll(PDO::FETCH_ASSOC);
         return $allQuizz;
     }
 }
