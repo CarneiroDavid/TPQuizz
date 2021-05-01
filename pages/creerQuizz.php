@@ -23,7 +23,6 @@ $i=0;
 
 for($i = 1; $i<=11 ; $i++)
 {
-    
     if($i == 1)
     {
         echo "<div id='question".$i."' style='display:block'>";

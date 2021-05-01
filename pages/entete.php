@@ -37,12 +37,7 @@ $cats = $application -> getAllCat();?>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="profil.php">Profil</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="creerQuizz.php">Creer ton Quizz</a>
-                </li>
+                
                 <?php
                 if(empty($_SESSION))
                 {
@@ -62,6 +57,15 @@ $cats = $application -> getAllCat();?>
                 <li class="nav-item">
                     <a class="nav-link" href="deconnexion.php">Deconnexion</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profil.php">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="listAmis.php">Amis</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="creerQuizz.php">Creer ton Quizz</a>
+                </li>
                     <?php
                 }
                 ?>
@@ -75,3 +79,6 @@ $cats = $application -> getAllCat();?>
 <br>
 
 <div class="container">
+<?php
+print_r($_SESSION);
+?>
