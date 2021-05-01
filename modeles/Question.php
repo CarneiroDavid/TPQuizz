@@ -1,5 +1,4 @@
 <?php
-
 class Question extends Modele
 {
     private $idQuizz;
@@ -56,41 +55,64 @@ class Question extends Modele
     }
     // public function 
 
+///////////////////////////////////////////////////////////////////////////////////////
     public function getIdQuizz()
     {
         return $this -> idQuizz;
     }
-    
+    public function setIdQuizz($idQuizz)
+    {
+        $this -> idQuizz = $idQuizz;
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////   
+
     public function getIdQuestion()
     {
         return $this -> idQuestion;
     }
+    public function setIdQuestion($idQuestion)
+    {
+        $this -> idQuestion =  $idQuestion;
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////
+
     public function getTitre()
     {
         return $this -> titre;
     }
+    public function setTitre($titre)
+    {
+        $this -> titre = $titre;
+    }
+///////////////////////////////////////////////////////////////////////////////////////
     public function getReps()
     {
         return $this -> reps;
     }
 
-    public function setIdQuestion($idQuestion)
-    {
-
-    }
-
-    public function setQuestion($question)
-    {
-
-    }
 
     public function addReponse($Reponse)
     {
-
+        $this-> reps[$Reponse->getIdReponse()] = $Reponse;
     } 
 
     public function removeReponse($idReponse)
     {
+        unset($this->reps[$idReponse]);
+    }
+///////////////////////////////////////////////////////////////////////////////////////
 
-    } 
+    public function creerQuestion($idQuizz, $titre)
+    {
+        $requete = $this->getBdd()->prepare("INSERT INTO questions(idQuizz,Titre) VALUES (?,?)");
+        $requete->execute([$idQuizz,$titre]);
+
+        $requete = $this->getBdd()->prepare("SELECT idQuestion from questions where titre = ?");
+        $requete->execute([$titre]);
+        $idQuestion = $requete->fetch(PDO::FETCH_ASSOC);
+        $this->idQuestion = $idQuestion["idQuestion"];
+
+    }
 }

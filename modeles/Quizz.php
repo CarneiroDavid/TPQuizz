@@ -1,5 +1,4 @@
 <?php
-
 class Quizz extends Modele
 {
     private $idQuizz; // int
@@ -38,38 +37,57 @@ class Quizz extends Modele
     {
         return $this -> idQuizz;
     }
+    
+    public function setIdQuizz($idQuizz)
+    {
+        $this -> idQuizz = $idQuizz; 
+    }
 
-    public function getTitleQuizz()
+///////////////////////////////////////////////////////////////////////////////////////
+    public function getTitreQuizz()
     {
         return $this -> titre;
     }
+    public function setTitre($Titre)
+    {
+        $this -> titre = $Titre;
+    }
 
+///////////////////////////////////////////////////////////////////////////////////////
     public function getCat()
     {
         return $this -> categorie;
     }
+    public function setCat($idCat)
+    {
+         $this -> categorie = $idCat;
+    }
+///////////////////////////////////////////////////////////////////////////////////////
+
 
     public function getQuestions()
     {
         return $this -> questions;
     }
 
-    public function setIdQuizz()
+    public function addQuestion($question)
     {
-
-    }
-    public function setTitre()
-    {
-
+        $this->question[$question->getIdQuestion()]= $question;
+     
     }
 
-    public function addQuestion()
+    public function removeQuestion($idQuestion)
     {
-
+        unset($this->question[$idQuestion]);
     }
 
-    public function removeQuestion()
-    {
-        
+///////////////////////////////////////////////////////////////////////////////////////   
+    public function creerQuizz($idUser){
+        $requete = $this->getBdd()->prepare("INSERT INTO quizz(idCategorie,Titre,idUser) VALUES (?,?,?)");
+        $requete->execute([$this->categorie,$this->titre,$idUser]);
+
+        $requete = $this->getBdd()->prepare("SELECT idQuizz from quizz where titre = ?");
+        $requete->execute([$this->titre]);
+        $this->idQuizz = $requete->fetch(PDO::FETCH_ASSOC);
     }
 }

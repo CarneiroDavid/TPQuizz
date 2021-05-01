@@ -1,5 +1,4 @@
 <?php
-
 class Categorie extends Modele
 {
     private $idCategorie;
@@ -19,16 +18,31 @@ class Categorie extends Modele
         }
     }
 
-    public function recupQuizz($idCat)
+    public function recupQuizz($idCat,$verif=null)
     {
-        $requete = $this -> getBdd() ->prepare("SELECT * FROM quizz WHERE idCategorie = ?");
-        $requete -> execute([$idCat]);
-        $quizzs = $requete -> fetchAll(PDO::FETCH_ASSOC);
-
-        foreach($quizzs as $Quizz)
+        if(empty($verif))
         {
-            $objetQuizz = new Quizz($Quizz["idQuizz"]);
-            $this -> quizz[] = $objetQuizz;
+            $requete = $this -> getBdd() ->prepare("SELECT * FROM quizz WHERE idCategorie = ? AND statut = 'true' ");
+            $requete -> execute([$idCat]);
+            $quizzs = $requete -> fetchAll(PDO::FETCH_ASSOC);
+
+            foreach($quizzs as $Quizz)
+            {
+                $objetQuizz = new Quizz($Quizz["idQuizz"]);
+                $this -> quizz[] = $objetQuizz;
+            }
+        }
+        if(!empty($verif))
+        {
+            $requete = $this -> getBdd() ->prepare("SELECT * FROM quizz WHERE idCategorie = ? ");
+            $requete -> execute([$idCat]);
+            $quizzs = $requete -> fetchAll(PDO::FETCH_ASSOC);
+
+            foreach($quizzs as $Quizz)
+            {
+                $objetQuizz = new Quizz($Quizz["idQuizz"]);
+                $this -> quizz[] = $objetQuizz;
+            }
         }
     }
 
@@ -37,13 +51,23 @@ class Categorie extends Modele
         return $this -> quizz;
     }
 
+///////////////////////////////////////////////////////////////////////////////////////
     public function getIdCat()
     {
         return $this -> idCategorie;
     }  
 
+    public function setIdCat( $idCat ){
+        $this-> idCategorie = $idCat;
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////
     public function getNom()
     {
         return $this -> nom;
+    }
+    public function setNom($newNom)
+    {
+        $this -> nom = $newNom;
     }
 }

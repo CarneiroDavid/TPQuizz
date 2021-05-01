@@ -1,5 +1,4 @@
 <?php
-
 class Reponse extends Modele
 {
     private $idReponse; //Int
@@ -30,35 +29,55 @@ class Reponse extends Modele
         $this -> reponse = $reponse;
         $this -> verification = $verif;
     }
+
+///////////////////////////////////////////////////////////////////////////////////////
     public function getReponse()
     {
         return $this -> reponse;
     }
+
+    public function setReponse($Reponse)
+    {
+        $this -> reponse = $Reponse;
+    }
+///////////////////////////////////////////////////////////////////////////////////////
     public function getIdReponse()
     {
         return $this -> idReponse;
     }
+    public function setIdReponse($idReponse)
+    {
+        $this -> idReponse = $idReponse;
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////
     public function getIdQuestion()
     {
         return $this -> idQuestion;
     }
+    public function setIdQuestion($idQuestion)
+    {
+        $this -> idQuestion = $idQuestion;
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////   
     public function getVerification()
     {
         return $this -> verification;
     }
-
-    public function setIdReponse()
+    public function setVerification($verification)
     {
-
+        $this -> verification = $verification;
     }
+///////////////////////////////////////////////////////////////////////////////////////
 
-    public function setReponse()
+    public function creerReponse($idQuestion, $titre,$verif="vrai")
     {
+        $requete = $this->getBdd()->prepare("INSERT INTO reponses(idQuestion,reponse,verification) VALUES (?,?,?)");
+        $requete->execute([$idQuestion,$titre,$verif]);
 
-    }
-
-    public function setVrai()
-    {
-        
+        $requete = $this->getBdd()->prepare("SELECT idReponse from reponses where reponse = ?");
+        $requete->execute([$titre]);
+        $this->idReponse = $requete->fetch(PDO::FETCH_ASSOC);
     }
 }
