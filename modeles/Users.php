@@ -3,6 +3,7 @@
 class User extends Modele
 {
     private $identifiant;
+    private $idUser;
     private $pseudo;
     private $nom;
     private $prenom;
@@ -19,7 +20,7 @@ class User extends Modele
             $requete = $this -> getBdd() -> prepare("SELECT * FROM users WHERE idUser = ?");
             $requete -> execute([$idUser]);
             $infos = $requete -> fetch(PDO::FETCH_ASSOC);
-
+            $this -> idUser = $infos["idUser"];
             $this -> identifiant = $infos["identifiant"];
             $this -> pseudo = $infos["pseudo"];
             $this -> email = $infos["email"];
@@ -32,7 +33,7 @@ class User extends Modele
             $this -> repQuestionSecrete = $infos["repQuestionSecrete"];
         }
     }
-
+///////////////////////////////////////////////////////////////////////////////////////
     public function connexion($id, $mdp)
     {
         $requete = $this -> getBdd() -> prepare("SELECT * FROM users WHERE identifiant = ?");
@@ -76,59 +77,85 @@ class User extends Modele
         }
     }
 
+///////////////////////////////////////////////////////////////////////////////////////
     public function getIdUser()
     {
-        $test = [$this -> identifiant, $this -> pseudo, $this -> nom];
-            return $test;
+        return $this->idUser;
     }
-
+    
+    public function setIdUser($idUser)
+    {
+        $this->idUser = $idUser;
+    }
+///////////////////////////////////////////////////////////////////////////////////////
     public function getIdentifiant()
     {
-        // $test = [$this -> identifiant, $this -> pseudo, $this -> nom];
-        // return $test;
-    }
-
-    public function getEmail()
-    {
-        $test = [$this -> identifiant, $this -> pseudo, $this -> nom];
-        return $test;
-    }
-    public function getMdp()
-    {
-        $test = [$this -> identifiant, $this -> pseudo, $this -> nom];
-        return $test;
-    }
-
-    public function getReponseSecrete()
-    {
-        // $requete = $this -> getBdd() -> prepare("SELECT * FROM questionsecrete");
-        // $requete -> execute();
-        // $this -> listeQuestionSecrete = $requete -> fetchAll(PDO::FETCH_ASSOC);
-        // return $this -> listeQuestionSecrete;
-    }
-
-    public function setUtilisateur($idUser)
-    {
-
+        return $this->identifiant;
     }
     public function setIdentifiant($identifiant)
     {
-        
+        $this->identifiant = $identifiant;
     }
-    public function setIdrole($idRole)
+///////////////////////////////////////////////////////////////////////////////////////
+    public function getEmail()
     {
-        
+        return $this->email;
     }
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+///////////////////////////////////////////////////////////////////////////////////////
+
+    public function getPseudo()
+    {
+        return $this->pseudo;
+    }
+    public function setPseudo($pseudo)
+    {
+        $this->pseudo = $pseudo;
+    }
+///////////////////////////////////////////////////////////////////////////////////////
+    public function getMdp()
+    {
+        return $this->mdp;
+    }    
     public function setMdp($Mdp)
     {
-        
+        $this->mdp = $Mdp;
     }
-    public function setQuestionSecrete($questionSecrete)
+///////////////////////////////////////////////////////////////////////////////////////
+    public function getReponseSecrete()
     {
-        
-    }
+        return $this-> repQuestionSecrete;
+    }    
     public function setReponse($reponse)
     {
-        
+        $this -> repQuestionSecrete = $reponse;
     }
+
+    public function setIdQuestionSecrete($IdquestionSecrete)
+    {
+        $this -> idQuestionSecrete = $IdquestionSecrete;
+    }
+
+    public function getQuestionSecrete(){
+        $requete = $this->getBdd()->prepare("SELECT intitule from questionSecrete where idQuestionSecrete = ?");
+        $requete->execute([$this->idQuestionSecrete]);
+        $QuestionSecrete = $requete->fetch(PDO::FETCH_ASSOC);
+        return $QuestionSecrete;
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////
+    public function setStatut($statut)
+    {
+       $this->statut = $statut;
+    }
+    public function getStatut($statut)
+    {
+       return $this->statut;
+    }
+
+
+
 }

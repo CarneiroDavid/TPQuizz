@@ -51,13 +51,23 @@ class Categorie extends Modele
         return $this -> quizz;
     }
 
+///////////////////////////////////////////////////////////////////////////////////////
     public function getIdCat()
     {
         return $this -> idCategorie;
     }  
 
+    public function setIdCat( $idCat ){
+        $this-> idCategorie = $idCat;
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////
     public function getNom()
     {
         return $this -> nom;
+    }
+    public function setNom($newNom)
+    {
+        $this -> nom = $newNom;
     }
 }

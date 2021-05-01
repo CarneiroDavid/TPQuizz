@@ -37,12 +37,23 @@ class Quizz extends Modele
     {
         return $this -> idQuizz;
     }
+    
+    public function setIdQuizz($idQuizz)
+    {
+        $this -> idQuizz = $idQuizz; 
+    }
 
-    public function getTitleQuizz()
+///////////////////////////////////////////////////////////////////////////////////////
+    public function getTitreQuizz()
     {
         return $this -> titre;
     }
+    public function setTitre($Titre)
+    {
+        $this -> titre = $Titre;
+    }
 
+///////////////////////////////////////////////////////////////////////////////////////
     public function getCat()
     {
         return $this -> categorie;
@@ -51,19 +62,12 @@ class Quizz extends Modele
     {
          $this -> categorie = $idCat;
     }
+///////////////////////////////////////////////////////////////////////////////////////
+
 
     public function getQuestions()
     {
         return $this -> questions;
-    }
-
-    public function setIdQuizz()
-    {
-
-    }
-    public function setTitre($idTitre)
-    {
-        $this -> titre = $idTitre;
     }
 
     public function addQuestion($idQuizz=null, $titre=null)
@@ -76,6 +80,8 @@ class Quizz extends Modele
     {
         
     }
+
+///////////////////////////////////////////////////////////////////////////////////////   
     public function creerQuizz($idUser){
         $requete = $this->getBdd()->prepare("INSERT INTO quizz(idCategorie,Titre,idUser) VALUES (?,?,?)");
         $requete->execute([$this->categorie,$this->titre,$idUser]);
