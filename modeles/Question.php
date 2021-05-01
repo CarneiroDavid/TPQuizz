@@ -95,12 +95,12 @@ class Question extends Modele
 
     public function addReponse($Reponse)
     {
-        $this-> reps[] = $Reponse;
+        $this-> reps[$Reponse->getIdReponse()] = $Reponse;
     } 
 
     public function removeReponse($idReponse)
     {
-
+        unset($this->reps[$idReponse]);
     }
 ///////////////////////////////////////////////////////////////////////////////////////
 

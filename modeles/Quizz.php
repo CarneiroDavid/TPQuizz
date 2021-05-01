@@ -72,13 +72,13 @@ class Quizz extends Modele
 
     public function addQuestion($question)
     {
-        $this->question[]= $question;
+        $this->question[$question->getIdQuestion()]= $question;
      
     }
 
-    public function removeQuestion()
+    public function removeQuestion($idQuestion)
     {
-        
+        unset($this->question[$idQuestion]);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////   
