@@ -1,6 +1,4 @@
 <?php
-require_once "Modele.php";
-
 class Reponse extends Modele
 {
     private $idReponse; //Int
@@ -61,5 +59,14 @@ class Reponse extends Modele
     public function setVrai()
     {
         
+    }
+    public function creerReponse($idQuestion, $titre,$verif="vrai")
+    {
+        $requete = $this->getBdd()->prepare("INSERT INTO reponses(idQuestion,reponse,verification) VALUES (?,?,?)");
+        $requete->execute([$idQuestion,$titre,$verif]);
+
+        $requete = $this->getBdd()->prepare("SELECT idReponse from reponses where reponse = ?");
+        $requete->execute([$titre]);
+        $this->idReponse = $requete->fetch(PDO::FETCH_ASSOC);
     }
 }

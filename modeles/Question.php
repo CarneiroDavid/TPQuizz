@@ -1,6 +1,4 @@
 <?php
-require_once "Modele.php";
-
 class Question extends Modele
 {
     private $idQuizz;
@@ -61,12 +59,20 @@ class Question extends Modele
     {
         return $this -> idQuizz;
     }
+    public function setIdQuizz()
+    {
+        return $this -> idQuizz;
+    }
     
     public function getIdQuestion()
     {
         return $this -> idQuestion;
     }
     public function getTitre()
+    {
+        return $this -> titre;
+    }
+    public function setTitre()
     {
         return $this -> titre;
     }
@@ -93,5 +99,15 @@ class Question extends Modele
     public function removeReponse($idReponse)
     {
 
-    } 
+    }
+    public function creerQuestion($idQuizz, $titre)
+    {
+        $requete = $this->getBdd()->prepare("INSERT INTO questions(idQuizz,Titre) VALUES (?,?)");
+        $requete->execute([$idQuizz,$titre]);
+
+        $requete = $this->getBdd()->prepare("SELECT idQuestion from questions where titre = ?");
+        $requete->execute([$titre]);
+        $this->idQuestion = $requete->fetch(PDO::FETCH_ASSOC);
+
+    }
 }

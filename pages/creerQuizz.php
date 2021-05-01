@@ -27,10 +27,14 @@ for($i = 1; $i<=11 ; $i++)
     if($i == 1)
     {
         echo "<div id='question".$i."' style='display:block'>";
+        
     }else{
         echo "<div id='question".$i."' style='display:none'>";
+        
     }
-        echo "<h3>Question ".$i."</h3>";
+    if($i != 11){
+     echo "<h3>Question ".$i."</h3>";
+    }
     if($i!=11){
         ?>
         <label for="Quizz[question][<?=$i?>][titre]">Question :</label>
@@ -54,12 +58,14 @@ for($i = 1; $i<=11 ; $i++)
         {
         echo "<button type='button' onclick='precQuestion(".$i.")'>Question Précédente</button>";
         }  
-
+        if($i<11){
         ?>
         <button type='button' onclick="nextQuestion(<?=$i;?>)">Question suivante</button>
         </div>
         <?php
-    }else{
+        }
+    }
+    if($i == 11){
         
         ?>
         <button type='button' onclick="precQuestion(<?=$i;?>)">Question Précédente</button>
