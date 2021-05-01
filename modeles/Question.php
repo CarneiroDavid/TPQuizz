@@ -1,5 +1,4 @@
 <?php
-require_once "Modele.php";
 
 class Question extends Modele
 {

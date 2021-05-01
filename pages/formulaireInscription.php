@@ -2,7 +2,7 @@
 require_once "entete.php";
 $Questions = new QuestionSecrete();
 $allQuestion = $Questions -> getQuestionsSecretes();
-print_r($_POST);
+// print_r($_POST);
 ?>
 <div class="container" style="max-width : 75%">
     <form class="row g-3" method="post" action="../traitements/Inscription.php">

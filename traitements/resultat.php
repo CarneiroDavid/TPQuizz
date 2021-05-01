@@ -1,5 +1,6 @@
 <?php
-require_once "../pages/entete.php";
+require_once "../modeles/Modele.php";
+
 $idDesQuestion = [];
 $listeReponse = [];
 ?>
@@ -25,8 +26,9 @@ if(!empty($_POST))
             $listeReponse[] = $idQuestion;
             $listeReponse[] = $reponse;
         } 
-        $requete = getBdd() -> prepare("SELECT idQuestion FROM questions WHERE idQuizz = ? AND idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ?");
+        $requete = getBdd() -> prepare("SELECT idQuestion, Titre FROM questions WHERE idQuizz = ? AND idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ? OR idQuestion = ?");
         $requete -> execute($idDesQuestion);
+        $Questions = $requete -> fetchAll(PDO::FETCH_ASSOC); 
 
         if($requete -> rowCount() == 10)
         {
@@ -41,21 +43,33 @@ if(!empty($_POST))
                 ?></pre><?php
                 $i =0;
                 $resultat = [];
-                foreach($verif as $x)
+
+                foreach($verif as $y)
                 {
-                    ?><pre><?php
-                    print_r($x);
-                    ?></pre><?php
-                    if($x["verification"] == "Vrai")
+                    foreach($Questions as $Q)
                     {
-                        $resultat[] = "La question ".$x["idQuestion"]." est vraie";
+                        if($y["idQuestion"] == $Q["idQuestion"])
+                        {
+                            $y["Titre"] = $Q["Titre"];
+                        }
+                    }
+
+                    if($y["verification"] == $y["idReponse"])
+                    {
+                        $resultat[] = "La réponse à la question ".$y["Titre"]." est vraie";
                         $i++;
                     }
+                    else
+                    {
+                        $resultat[] = "La réponse à la question  ".$y["Titre"]." est fausse";
+                        
+                    }
                 }
-                echo $i;
+
+                echo $i . "</br>";
                 foreach ($resultat as $result)
                 {
-                    echo $result;
+                    echo $result . "</br>";
                 }
 
                 if(!empty($_SESSION["idUser"]))
