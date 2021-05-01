@@ -70,9 +70,9 @@ class Quizz extends Modele
         return $this -> questions;
     }
 
-    public function addQuestion($idQuizz=null, $titre=null)
+    public function addQuestion($question)
     {
-        $this->question= new Question();
+        $this->question[]= $question;
      
     }
 

@@ -151,7 +151,7 @@ class User extends Modele
     {
        $this->statut = $statut;
     }
-    public function getStatut($statut)
+    public function getStatut()
     {
        return $this->statut;
     }
