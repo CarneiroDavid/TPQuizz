@@ -4,16 +4,11 @@ $requete = getBdd() -> prepare("SELECT lier.idUser as idEnvoyeur, idAmis,lier.ps
 $requete -> execute([$_SESSION["idUser"]]);
 $attente = $requete -> fetchAll(PDO::FETCH_ASSOC);
 
-// $requeteTest = getBdd() ->prepare("SELECT pseudo FROM users WHERE idUser = ?");
-// $requeteTest -> execute([$attente["idUser"]]);
-// $idEnvoyeur = $requeteTest -> fetch(PDO::FETCH_ASSOC); 
-// print_r($attente);
-
 $requete = getBdd() -> prepare("SELECT * FROM lier INNER JOIN users ON users.idUser = lier.idAmis WHERE Etat = 'Accepter' AND lier.idUser = ?");
 $requete -> execute([$_SESSION["idUser"]]);
 $amis = $requete -> fetchAll(PDO::FETCH_ASSOC);
 ?><pre><?php
-print_r($amis);
+// print_r($amis);
 ?></pre>
 
 <div>

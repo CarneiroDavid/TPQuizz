@@ -1,21 +1,13 @@
 <?php
 require_once "../modeles/Modele.php";
-// $bdd = new Modele();
-// $quizz = new Quizz(2);
-
-// $David = new User();
 
 $application = new Application();
 $cats = $application -> getAllCat();?>
 <pre>
 <?php
-// print_r($cats);
-// print_r($quizz);
-// print_r(new Categorie());
-// print_r($_SESSION);
+
 ?></pre><?php
 
-// echo $_SESSION["prenom"];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -57,9 +49,9 @@ $cats = $application -> getAllCat();?>
                 <li class="nav-item">
                     <a class="nav-link" href="deconnexion.php">Deconnexion</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="profil.php">Profil</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="listAmis.php">Amis</a>
                 </li>
@@ -79,6 +71,3 @@ $cats = $application -> getAllCat();?>
 <br>
 
 <div class="container">
-<?php
-print_r($_SESSION);
-?>

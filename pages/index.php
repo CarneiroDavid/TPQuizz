@@ -3,28 +3,28 @@ require_once "entete.php";
     if(empty($_GET["idCat"]) && empty($_GET["idQuizz"]))
     {
         ?>
-        <h2>Categorie</h2></br>
-        <div class="container" style="max-width: 75%;margin-left: auto; margin-right: auto">
-        <?php
-        foreach ($cats as $cate)
-        {
-            ?>
-                
-            <div class="col-md-12" style="max-width: 30%;float:left;">
-                <div class="card">            
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align: center;">
-                            <?=$cate["nom"];?>
-                        </h5>
-                        <a href="index.php?idCat=<?=$cate["idCategorie"];?>" style="text-align:center; width : 100%" class="btn btn-primary">lien</a>
+        <h2 style="text-align:center;">Categorie</h2></br>
+        <div style="margin-left:auto; margin-right:auto;height:100%" >
+            <?php
+            foreach ($cats as $cate)
+            {
+                ?>
+                    
+                <div class="col-md-12" style="max-width:25%;float:left;">
+                    <div class="card">            
+                        <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">
+                                <?=$cate["nom"];?>
+                            </h5>
+                            <a href="index.php?idCat=<?=$cate["idCategorie"];?>" style="text-align:center; width : 100%" class="btn btn-primary">lien</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php
-        }
-            ?>
+                <?php
+            }
+                ?>
         </div>
-            <?php
+        <?php
     }
    
     if(!empty($_GET["idCat"]))
@@ -44,7 +44,7 @@ require_once "entete.php";
                 <div class="card">            
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">
-                            <?=$Quizz -> getTitleQuizz();?>
+                            <?=$Quizz -> getTitreQuizz();?>
                         </h5>
                         <a href="index.php?idQuizz=<?=$Quizz -> getIdQuizz();?>" style="text-align:center; width : 100%" class="btn btn-primary">lien</a>
                     </div>
