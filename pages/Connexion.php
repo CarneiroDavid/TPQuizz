@@ -8,7 +8,7 @@ require_once "entete.php";
         <input type="text" class="form-control" name="identifiant" id="identifiant">
     </div>
     <div class="col-md-6">
-        <label for="mdp" class="form-label">Saississez votre addresse email</label>
+        <label for="mdp" class="form-label">Saississez votre mot de passe</label>
         <input type="password" class="form-control" name="mdp" id="mdp">
     </div>
     <div>

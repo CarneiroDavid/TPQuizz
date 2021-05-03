@@ -10,7 +10,7 @@ class User extends Modele
     private $mdp;
     private $mdp2;
     private $statut;
-    private $idQuestionSecrete;
+    private $QuestionSecrete;
     private $repQuestionSecrete;
 
     public function __construct($idUser = null)
@@ -29,7 +29,7 @@ class User extends Modele
             $this -> mdp = $infos["MDP"];
             $this -> mdp2 = $infos["MDP2"];
             $this -> statut = $infos["statut"];
-            $this -> idQuestionSecrete = $infos["idQuestionSecrete"];
+            $this -> QuestionSecrete = new questionSecrete();
             $this -> repQuestionSecrete = $infos["repQuestionSecrete"];
         }
     }
@@ -135,16 +135,14 @@ class User extends Modele
         $this -> repQuestionSecrete = $reponse;
     }
 
-    public function setIdQuestionSecrete($IdquestionSecrete)
+    public function setIdQuestionSecrete($questionSecrete)
     {
-        $this -> idQuestionSecrete = $IdquestionSecrete;
+        $this -> QuestionSecrete = $questionSecrete;
     }
 
     public function getQuestionSecrete(){
-        $requete = $this->getBdd()->prepare("SELECT intitule from questionSecrete where idQuestionSecrete = ?");
-        $requete->execute([$this->idQuestionSecrete]);
-        $QuestionSecrete = $requete->fetch(PDO::FETCH_ASSOC);
-        return $QuestionSecrete;
+        
+        return $this->QuestionSecrete;
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////

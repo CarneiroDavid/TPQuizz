@@ -12,7 +12,7 @@ function getBdd()
 {
     return new PDO('mysql:host=localhost;dbname=quizz;charset=UTF8', 'root', '',  array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 }
-require_once "Users.php";
+require_once "User.php";
 require_once "Score.php";
 require_once "Lier.php";
 require_once "Categorie.php";

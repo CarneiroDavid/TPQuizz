@@ -1,5 +1,7 @@
 <?php
 require_once "entete.php";
+
+
 if(!empty($_GET["erreur"])){
     ?>
     <div class="alert alert-danger text-center"><h5><?=$_GET["erreur"];?> </h5></div>
