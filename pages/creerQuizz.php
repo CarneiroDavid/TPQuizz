@@ -17,6 +17,8 @@ if(!empty($_GET["erreur"])){
     <div class="col-md-6">
         <label for="Quizz[titre]">Titre</label>
         <input type="text" class="form-control" name="Quizz[titre]">
+        <input type="hidden" class="form-control" name="Quizz[action]" value="creer">
+
     </div>
     
     <br>

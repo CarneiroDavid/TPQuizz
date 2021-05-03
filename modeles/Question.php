@@ -115,4 +115,24 @@ class Question extends Modele
         $this->idQuestion = $idQuestion["idQuestion"];
 
     }
+
+    public function modifierQuestion($titre, $idQuestion, $idQuizz)
+    {
+        $requete = $this -> getBdd() -> prepare("UPDATE questions SET Titre = ? WHERE idQuestion = ? AND idQuizz = ?");
+        $requete -> execute([$titre, $idQuestion, $idQuizz]);
+    }
+    public function supprimerQuestion($idQuizz)
+    {
+        try
+        {
+            $requete = $this -> getBdd() -> prepare("DELETE FROM questions WHERE idQuizz = ?");
+            $requete -> execute([$idQuizz]);
+            return true;
+
+        }
+        catch(Exception $e)
+        {
+            echo $e -> getMessage();
+        }
+    }
 }
