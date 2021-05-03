@@ -1,5 +1,17 @@
 <?php
 require_once "entete.php";
+if(!empty($_GET["erreur"])){
+    ?>
+    <div class="alert alert-danger text-center"><h5><?=$_GET["erreur"];?> </h5></div>
+
+    <?php
+}
+if(!empty($_GET["success"])){
+    ?>
+    <div class="alert alert-success text-center"><h5><?=$_GET["success"];?> </h5></div>
+
+    <?php
+}
     if(empty($_GET["idCat"]) && empty($_GET["idQuizz"]))
     {
         ?>

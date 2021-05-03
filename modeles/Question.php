@@ -109,8 +109,8 @@ class Question extends Modele
         $requete = $this->getBdd()->prepare("INSERT INTO questions(idQuizz,Titre) VALUES (?,?)");
         $requete->execute([$idQuizz,$titre]);
 
-        $requete = $this->getBdd()->prepare("SELECT idQuestion from questions where titre = ?");
-        $requete->execute([$titre]);
+        $requete = $this->getBdd()->prepare("SELECT idQuestion from questions where titre = ? AND idQuizz = ?");
+        $requete->execute([$titre, $idQuizz]);
         $idQuestion = $requete->fetch(PDO::FETCH_ASSOC);
         $this->idQuestion = $idQuestion["idQuestion"];
 

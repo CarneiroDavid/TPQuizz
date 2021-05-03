@@ -37,10 +37,6 @@ if(!empty($_POST))
             if($requete -> rowCount() == 10)
             {
                 $verif = $requete -> fetchAll(PDO::FETCH_ASSOC);
-                ?><pre><?php
-                // print_r($listeReponse);
-                // print_r($verif);
-                ?></pre><?php
                 $i =0;
                 $resultat = [];
 
@@ -79,10 +75,17 @@ if(!empty($_POST))
                         $select = new Selectionner();
                         $select -> initialiserSelectionner($_SESSION["idUser"], $reponse, $idQuestion, $idQuizz);
                         $select -> insertion();
+                        $score = new Score($_SESSION["idUser"]);
+                        $tab = $score->getScore();
+                        if(empty($tab[$idQuizz]))
+                        {
+                        $score->creerScore($_SESSION["idUser"],$idQuizz,$i);
+                        }
                     }
                 }
                 else
                 {
+                    
 
                 }
                 

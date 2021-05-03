@@ -17,6 +17,9 @@ class Selectionner extends Modele
 
     public function insertion()
     {
+        $requete = $this-> getBdd()-> prepare("SELECT * FROM selectionner WHERE idUser = ? AND idQuizz = ?");
+        $requete->execute([$this->idUser,$this->idQuizz]);
+        if($requete->rowCount() != 10){
         try
         {
             $requete = $this -> getBdd() -> prepare("INSERT INTO selectionner(idUser, idReponse, idQuestion, idQuizz) VALUES (?, ?, ?, ?)");
@@ -24,7 +27,8 @@ class Selectionner extends Modele
         }
         catch(Exception $e)
         {
-            echo $e -> getMessage();
+            return $e -> getMessage();
+        }
         }
     }
 }

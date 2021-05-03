@@ -1,11 +1,7 @@
 <?php
 require_once "../modeles/Modele.php";
 ?>
-<pre>
-    <?php
-    print_r($_POST);
-    ?>
-</pre>
+
 <?php
     $requete = getBdd()->prepare("SELECT * FROM categoriequizz WHERE idCategorie = ?");
     $requete->execute([$_POST["Quizz"]["idCategorie"]]);
@@ -30,7 +26,10 @@ require_once "../modeles/Modele.php";
                 }
                 foreach($question["reponse"] as $NumeroReponse => $reponse){
                     if(empty($reponse)){
-                        $erreur[$x][$NumeroReponse]= "La Reponse envoyé est vide"; 
+                        $erreur[$x]= "Question ". $x." : La Reponse ". $NumeroReponse ." est vide"; 
+                    }
+                    if(strlen($reponse) >=60){
+                        $erreur[$x]= "Question ". $x." : La Reponse ". $NumeroReponse ." est trop long, 60 caractères maximum"; 
                     }
                 }
             }
@@ -49,7 +48,7 @@ require_once "../modeles/Modele.php";
                     $newQuestion-> creerQuestion($idQuizz["idQuizz"], $question["titre"]);
                     $idQuestion= $newQuestion -> getIdQuestion();
                     
-                    
+
                     foreach($question["reponse"] as $reponse)
                     {
                         $newReponse = new Reponse();
@@ -58,36 +57,41 @@ require_once "../modeles/Modele.php";
 
                         if($i==1){
 
-                            $newReponse -> creerReponse($idQuestion["idQuestion"], $reponse);
+                            $newReponse -> creerReponse($idQuestion, $reponse);
                             $verif = $newReponse->getIdReponse();
-                            print_r($verif);
+                            
                         }else{
-                            $newReponse -> creerReponse($idQuestion["idQuestion"], $reponse, $verif["idReponse"]);
+                            $newReponse -> creerReponse($idQuestion, $reponse, $verif["idReponse"]);
                         }
                         $i++;
                     }
                     $i=1;
                 }
-                
+                $success="Le Quizz a bien était enregistrer";
+                header("location:../pages/index.php?success=$success");
                 
                 
             }else{
                 ?>
                 <pre>
                 <?php
-                print_r($erreur)
+                $rapport="";
+                foreach($erreur as $q){
+                    $rapport = $rapport." ".$q." <br>";
+                }
+                header("location:../pages/creerQuizz.php?erreur=$rapport");
                 ?>
                 </pre>
                 <?php
             }
         }else{
              $erreur = "Le titre du Quizz doit contenir entre 3 et 60 caractères";
-             echo $erreur;
+             header("location:../pages/creerQuizz.php?erreur=$erreur");
         }
 
     }else{
 
         $erreur = "la catégorie selectionné n'existe pas";
-        echo $erreur;
+        header("location:../pages/creeQuizz.php?erreur=$erreur");
     }
     ?>

@@ -2,6 +2,13 @@
 require_once "entete.php";
 $app = new Application();
 $allCat = $app->getAllCat();
+if(!empty($_GET["erreur"])){
+    ?>
+    <div class="alert alert-danger text-center">
+    <h5><?=$_GET["erreur"];?> </h5>
+    </div>
+    <?php
+}
 ?>
 <h2 style="text-align:center;">Créer ton quizz !</h2>
 <div class="container" style="max-width : 75%">
