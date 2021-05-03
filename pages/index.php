@@ -35,6 +35,7 @@ require_once "entete.php";
         ?><pre><?php
         // print_r($listQuizz);
         ?></pre>
+        <h2 style="text-align: center;">Quizz</h2>
         <div class="container" style="max-width: 75%;">
         <?php
         foreach($listQuizz as $Quizz)

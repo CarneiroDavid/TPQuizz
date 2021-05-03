@@ -48,29 +48,24 @@ require_once "../modeles/Modele.php";
                     $newQuestion = new Question();
                     $newQuestion-> creerQuestion($idQuizz["idQuizz"], $question["titre"]);
                     $idQuestion= $newQuestion -> getIdQuestion();
-                    
-                    
+           
                     foreach($question["reponse"] as $reponse)
                     {
                         $newReponse = new Reponse();
-                        
-                        
 
                         if($i==1){
 
-                            $newReponse -> creerReponse($idQuestion["idQuestion"], $reponse);
+                            $newReponse -> creerReponse($idQuestion, $reponse);
                             $verif = $newReponse->getIdReponse();
+                            
                             print_r($verif);
                         }else{
-                            $newReponse -> creerReponse($idQuestion["idQuestion"], $reponse, $verif["idReponse"]);
+                            $newReponse -> creerReponse($idQuestion, $reponse, $verif["idReponse"]);
                         }
                         $i++;
                     }
                     $i=1;
                 }
-                
-                
-                
             }else{
                 ?>
                 <pre>

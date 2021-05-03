@@ -33,6 +33,7 @@ $cats = $application -> getAllCat();?>
                 <?php
                 if(empty($_SESSION))
                 {
+                    
                 ?>
                 <li class="nav-item">
                     <a class="nav-link" href="Connexion.php">Connexion</a>
@@ -45,6 +46,16 @@ $cats = $application -> getAllCat();?>
                 }
                 else
                 {
+
+                    if($_SESSION["statut"] == "Admin")
+                    {
+                    ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin.php">Admin</a>
+                        </li>                
+                    <?php
+                    }
+
                     ?>
                 <li class="nav-item">
                     <a class="nav-link" href="deconnexion.php">Deconnexion</a>

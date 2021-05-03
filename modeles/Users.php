@@ -57,6 +57,7 @@ class User extends Modele
             $_SESSION["nom"] = $utilisateur["nom"];;
             $_SESSION["email"] = $utilisateur["email"];
             $_SESSION["pseudo"] = $utilisateur["pseudo"];
+            $_SESSION["statut"] = $utilisateur["statut"];
             return true;
             }
         }
