@@ -80,4 +80,25 @@ class Reponse extends Modele
         $requete->execute([$titre]);
         $this->idReponse = $requete->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function modifierReponse($reponse, $idReponse)
+    {
+        $requete = $this -> getBdd() -> prepare ("UPDATE reponses SET reponse = ? WHERE idReponse = ?");
+        $requete -> execute([$reponse, $idReponse]);
+    }
+
+    public function supprimerReponse($idQuizz)
+    {
+        try
+        {
+            $requete = $this -> getBdd() -> prepare("DELETE FROM reponses WHERE idQuizz = ?");
+            $requete -> execute([$idQuizz]);
+            return true;
+
+        }
+        catch(Exception $e)
+        {
+            echo $e -> getMessage();
+        }
+    }
 }

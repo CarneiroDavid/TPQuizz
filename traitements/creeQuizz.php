@@ -33,35 +33,62 @@ require_once "../modeles/Modele.php";
                     }
                 }
             }
-            if(empty($erreur)){
-
+            if(empty($erreur))
+            {
                 $newQuizz = new Quizz();
                 $newQuizz->setTitre($_POST["Quizz"]["titre"]);
                 $newQuizz->setCat($_POST["Quizz"]["idCategorie"]);
-                $_SESSION["idUser"]=1;
-                $newQuizz->CreerQuizz($_SESSION["idUser"]);
+                $newQuizz -> setIdQuizz($_POST["Quizz"]["idQuizz"]);
+                
+                if($_POST["Quizz"]["action"] == "modifier")
+                {
+                    $newQuizz -> modifierQuizz();
+
+                }
+                elseif($_POST["Quizz"]["action"] == "creer")
+                {
+                    $newQuizz->CreerQuizz($_SESSION["idUser"]);
+                }
+                
                 $idQuizz = $newQuizz-> getIdQuizz();
                 $i=1;
-                foreach($_POST["Quizz"]["question"] as $question)
+                foreach($_POST["Quizz"]["question"] as $idQuestion => $question)
                 {
                     $newQuestion = new Question();
-                    $newQuestion-> creerQuestion($idQuizz["idQuizz"], $question["titre"]);
+                    
+                    if($_POST["Quizz"]["action"] == "modifier")
+                    {
+                        $newQuestion -> modifierQuestion($question["titre"], $idQuestion, $_POST["Quizz"]["idQuizz"]);
+                    }
+                    elseif($_POST["Quizz"]["action"] == "creer")
+                    {
+                        $newQuestion-> creerQuestion($idQuizz["idQuizz"], $question["titre"]);
+                    }
                     $idQuestion= $newQuestion -> getIdQuestion();
            
-                    foreach($question["reponse"] as $reponse)
+                    foreach($question["reponse"] as $idReponse => $reponse)
                     {
                         $newReponse = new Reponse();
 
-                        if($i==1){
+                        if($_POST["Quizz"]["action"] == "creer")
+                        {
+                            if($i==1){
 
-                            $newReponse -> creerReponse($idQuestion, $reponse);
-                            $verif = $newReponse->getIdReponse();
-                            
-                            print_r($verif);
-                        }else{
-                            $newReponse -> creerReponse($idQuestion, $reponse, $verif["idReponse"]);
+                                $newReponse -> creerReponse($idQuestion, $reponse);
+                                $verif = $newReponse->getIdReponse();
+                                
+                                print_r($verif);
+                            }else{
+                                $newReponse -> creerReponse($idQuestion, $reponse, $verif["idReponse"]);
+                            }
+                            $i++;
                         }
-                        $i++;
+
+                        if($_POST["Quizz"]["action"] == "modifier")
+                        {
+                            $newReponse -> modifierReponse($reponse, $idReponse);
+                            header("location:../pages/admin.php?success=reponseModifier");
+                        }
                     }
                     $i=1;
                 }
@@ -86,6 +113,6 @@ require_once "../modeles/Modele.php";
     }else{
 
         $erreur = "la catégorie selectionné n'existe pas";
-        header("location:../pages/creeQuizz.php?erreur=$erreur");
+        header("location:../pages/creerQuizz.php?erreur=$erreur");
     }
     ?>

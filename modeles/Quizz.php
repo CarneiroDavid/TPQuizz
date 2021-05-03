@@ -90,4 +90,24 @@ class Quizz extends Modele
         $requete->execute([$this->titre]);
         $this->idQuizz = $requete->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function modifierQuizz()
+    {
+        $requete = $this -> getBdd() -> prepare("UPDATE quizz SET Titre = ?, idCategorie = ? WHERE idQuizz = ?");
+        $requete -> execute([$this -> titre, $this -> categorie, $this -> idQuizz]);
+    }
+
+    public function supprimerQuizz($idQuizz)
+    {
+        try
+        {
+            $requete = $this -> getBdd() -> prepare("DELETE FROM quizz WHERE idQuizz = ?");
+            $requete -> execute([$idQuizz]);
+            return true;
+        }
+        catch(Exception $e)
+        {
+            echo $e -> getMessage();
+        }
+    }
 }
