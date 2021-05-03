@@ -54,7 +54,7 @@ if(!empty($_POST))
                         }
                     }
 
-                    if($y["verification"] == $y["idReponse"])
+                    if($y["verification"] == $y["idReponse"] || $y["verification"] == "vrai")
                     {
                         $resultat[] = "La réponse à la question ".$y["Titre"]." est vraie";
                         $i++;
