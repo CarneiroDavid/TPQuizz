@@ -47,19 +47,17 @@ require_once "../modeles/Modele.php";
                     $newQuestion = new Question();
                     $newQuestion-> creerQuestion($idQuizz["idQuizz"], $question["titre"]);
                     $idQuestion= $newQuestion -> getIdQuestion();
-                    
-
+           
                     foreach($question["reponse"] as $reponse)
                     {
                         $newReponse = new Reponse();
-                        
-                        
 
                         if($i==1){
 
                             $newReponse -> creerReponse($idQuestion, $reponse);
                             $verif = $newReponse->getIdReponse();
                             
+                            print_r($verif);
                         }else{
                             $newReponse -> creerReponse($idQuestion, $reponse, $verif["idReponse"]);
                         }
@@ -67,10 +65,6 @@ require_once "../modeles/Modele.php";
                     }
                     $i=1;
                 }
-                $success="Le Quizz a bien était enregistrer";
-                header("location:../pages/index.php?success=$success");
-                
-                
             }else{
                 ?>
                 <pre>
