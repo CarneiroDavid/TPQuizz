@@ -36,3 +36,4 @@ function precQuestion(x, idReponse = null)
         document.getElementById("Reponse["+ x +"]").value = idReponse;
     }
 }
+

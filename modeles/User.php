@@ -125,6 +125,21 @@ class User extends Modele
     {
         $this->mdp = $Mdp;
     }
+    public function ChangeMdp($Mdp,$idUser){
+        
+        try{
+            $Mdp2 = password_hash($Mdp, PASSWORD_BCRYPT);
+            $requete=$this->getBdd()->prepare("UPDATE users SET MDP = ?, MDP2= ? WHERE idUser= ?");
+            $requete->execute([$Mdp,$Mdp2, $idUser]);
+            return true;
+        }
+        catch(Exception $e)
+        {
+            return $e;
+        }
+
+        
+    }
 ///////////////////////////////////////////////////////////////////////////////////////
     public function getReponseSecrete()
     {
