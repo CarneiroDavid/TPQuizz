@@ -110,4 +110,17 @@ class Quizz extends Modele
             echo $e -> getMessage();
         }
     }
+    public function accepterQuizz($idQuizz)
+    {
+        try
+        {   
+            $requete = $this -> getBdd() -> prepare("UPDATE quizz SET statut = 'true' WHERE idQuizz= ?");
+            $requete -> execute([$idQuizz]);
+            return true;
+        }
+        catch(Exception $e)
+        {
+            echo $e -> getMessage();
+        }
+    }
 }

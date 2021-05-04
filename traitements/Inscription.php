@@ -17,7 +17,7 @@ if(!empty($_POST["envoi"]) && $_POST["envoi"] == 1)
                     {
                         if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
                         {
-                            if(strlen($_POST["mdp"]) > 6)
+                            if(strlen($_POST["mdp"]) > 6 && strlen($_POST["mdp"]) < 35)
                             {
                                 if(strlen($_POST["repQuestion"]) < 100)
                                 {

@@ -116,6 +116,26 @@ class User extends Modele
     {
         $this->pseudo = $pseudo;
     }
+
+///////////////////////////////////////////////////////////////////////////////////////
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    public function setNom($nom)
+    {
+        $this->pseudo = $nom;
+    }
+///////////////////////////////////////////////////////////////////////////////////////
+    public function setPrenom($prenom)
+    {
+        $this->pseudo = $prenom;
+    }
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
 ///////////////////////////////////////////////////////////////////////////////////////
     public function getMdp()
     {
@@ -168,6 +188,49 @@ class User extends Modele
     public function getStatut()
     {
        return $this->statut;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////
+    public function allUser()
+    {
+        $requete = $this -> getBdd() -> prepare("SELECT idUser, pseudo, statut FROM users");
+        $requete -> execute();
+        $allUser = $requete -> fetchAll(PDO::FETCH_ASSOC);
+        return $allUser;
+    }
+
+    public function modifierUser($identifant, $pseudo, $nom, $prenom, $email, $idUser)
+    {
+        try
+        {
+            $requete = $this -> getBdd() -> prepare("UPDATE users SET identifiant = ?, pseudo = ?, nom = ?, prenom = ?, email = ? WHERE idUser = ?");
+            $requete -> execute([$identifant, $pseudo, $nom, $prenom, $email, $idUser]);
+            return true;
+        }catch(Exception $e)
+        {
+            echo $e -> getMessage();
+        }    
+    }
+
+    public function supprimerUser($idUser)
+    {
+        $requete = $this -> getBdd() -> prepare("DELETE FROM users WHERE idUser = ?");
+        $requete -> execute([$idUser]);
+        $requete = $this -> getBdd() -> prepare("DELETE FROM selectionner WHERE idUser = ?");
+        $requete -> execute([$idUser]);
+        $requete = $this -> getBdd() -> prepare("DELETE FROM quizz WHERE idUser = ?");
+        $requete -> execute([$idUser]);
+        $requete = $this -> getBdd() -> prepare("DELETE FROM participer WHERE idUser = ?");
+        $requete -> execute([$idUser]);
+        $requete = $this -> getBdd() -> prepare("DELETE FROM lier WHERE idUser = ?");
+        $requete -> execute([$idUser]);
+    }
+
+    public function infoUser($idUser)
+    {
+        $requete = $this -> getBdd() -> prepare("SELECT *FROM users WHERE idUser = ?");
+        $requete -> execute([$idUser]);
+        $infos = $requete -> fetch(PDO::FETCH_ASSOC);
+        return $infos;
     }
 
 

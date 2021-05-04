@@ -71,10 +71,10 @@ class Reponse extends Modele
     }
 ///////////////////////////////////////////////////////////////////////////////////////
 
-    public function creerReponse($idQuestion, $titre,$verif="vrai")
+    public function creerReponse($idQuizz, $idQuestion, $titre,$verif="vrai")
     {
-        $requete = $this->getBdd()->prepare("INSERT INTO reponses(idQuestion,reponse,verification) VALUES (?,?,?)");
-        $requete->execute([$idQuestion,$titre,$verif]);
+        $requete = $this->getBdd()->prepare("INSERT INTO reponses(idQuizz, idQuestion,reponse,verification) VALUES (?,?,?,?)");
+        $requete->execute([$idQuizz, $idQuestion,$titre,$verif]);
 
         $requete = $this->getBdd()->prepare("SELECT idReponse from reponses where reponse = ?");
         $requete->execute([$titre]);

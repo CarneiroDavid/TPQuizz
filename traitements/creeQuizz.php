@@ -1,13 +1,19 @@
 <?php
 require_once "../modeles/Modele.php";
 ?>
+<pre>
+<?php
+// print_r($_POST);
+?>
+</pre>
+
 
 <?php
     $requete = getBdd()->prepare("SELECT * FROM categoriequizz WHERE idCategorie = ?");
     $requete->execute([$_POST["Quizz"]["idCategorie"]]);
     if($requete -> rowCount() != 0)
     {
-        if(!empty($_POST["Quizz"]["titre"]) && strlen($_POST["Quizz"]["titre"]) >= 3 && strlen($_POST["Quizz"]["titre"]) <= 60)
+        if(!empty($_POST["Quizz"]["titre"]) && strlen($_POST["Quizz"]["titre"]) >= 3 && strlen($_POST["Quizz"]["titre"]) <= 100)
         {
             foreach($_POST["Quizz"]["question"] as $x => $question)
             {
@@ -20,9 +26,9 @@ require_once "../modeles/Modele.php";
                 {
                     $erreur[$x] = "Question ". $x." : L'intitulé de la question est trop cours, 5 caractères minimum";
                 }
-                if(strlen($question["titre"]) >=60)
+                if(strlen($question["titre"]) >=100)
                 {
-                    $erreur[$x] = "Question ". $x." : L'intitulé de la question est trop long, 60 caractères maximum";
+                    $erreur[$x] = "Question ". $x." : L'intitulé de la question est trop long, 100 caractères maximums";
                 }
                 foreach($question["reponse"] as $NumeroReponse => $reponse){
                     if(empty($reponse)){
@@ -38,12 +44,11 @@ require_once "../modeles/Modele.php";
                 $newQuizz = new Quizz();
                 $newQuizz->setTitre($_POST["Quizz"]["titre"]);
                 $newQuizz->setCat($_POST["Quizz"]["idCategorie"]);
-                $newQuizz -> setIdQuizz($_POST["Quizz"]["idQuizz"]);
                 
                 if($_POST["Quizz"]["action"] == "modifier")
                 {
+                    $newQuizz -> setIdQuizz($_POST["Quizz"]["idQuizz"]);
                     $newQuizz -> modifierQuizz();
-
                 }
                 elseif($_POST["Quizz"]["action"] == "creer")
                 {
@@ -74,23 +79,31 @@ require_once "../modeles/Modele.php";
                         {
                             if($i==1){
 
-                                $newReponse -> creerReponse($idQuestion, $reponse);
+                                $newReponse -> creerReponse($idQuizz["idQuizz"], $idQuestion, $reponse);
                                 $verif = $newReponse->getIdReponse();
                                 
-                                print_r($verif);
+                                // print_r($verif);
                             }else{
-                                $newReponse -> creerReponse($idQuestion, $reponse, $verif["idReponse"]);
+                                $newReponse -> creerReponse($idQuizz["idQuizz"],$idQuestion, $reponse, $verif["idReponse"]);
                             }
                             $i++;
                         }
-
+                        
                         if($_POST["Quizz"]["action"] == "modifier")
                         {
                             $newReponse -> modifierReponse($reponse, $idReponse);
-                            header("location:../pages/admin.php?success=reponseModifier");
                         }
                     }
+
                     $i=1;
+                }
+                if($_POST["Quizz"]["action"] == "modifer")
+                {
+                    header("location:../pages/admin.php?success=reponseModifier");
+                }
+                if($_POST["Quizz"]["action"] == "creer")
+                {
+                    header("location:../pages/index.php?success=quizzCreer");
                 }
             }else{
                 ?>
