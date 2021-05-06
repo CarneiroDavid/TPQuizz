@@ -97,7 +97,7 @@ require_once "../modeles/Modele.php";
 
                     $i=1;
                 }
-                if($_POST["Quizz"]["action"] == "modifer")
+                if($_POST["Quizz"]["action"] == "modifier")
                 {
                     header("location:../pages/admin.php?success=reponseModifier");
                 }

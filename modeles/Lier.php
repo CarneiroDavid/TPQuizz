@@ -82,6 +82,15 @@ class Lier extends Modele
         }
     }
 
+    public function recupListAmi($idUser)
+    {
+        $requete = $this -> getBdd() -> prepare("SELECT users.pseudo FROM lier INNER JOIN users ON lier.idAmis = users.idUser WHERE lier.idUser = ?");
+        $requete -> execute([$idUser]);
+        $allAmis = $requete -> fetchAll(PDO::FETCH_ASSOC);
+        
+        return $allAmis;
+    }
+
     public function getIdUser($idUser)
     {
         $this -> idUser = $idUser;

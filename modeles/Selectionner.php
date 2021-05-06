@@ -31,4 +31,12 @@ class Selectionner extends Modele
         }
         }
     }
+
+    public function recupeReponse($idQuizz, $idUser)
+    {
+        $requete = $this -> getBdd() -> prepare("SELECT * FROM selectionner WHERE selectionner.idQuizz = ? AND selectionner.idUser = ? ORDER BY idUser");
+        $requete -> execute([$idQuizz, $idUser]);
+        $resultats = $requete -> fetchAll(PDO::FETCH_ASSOC);
+        return $resultats;
+    }
 }

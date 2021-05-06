@@ -9,7 +9,7 @@ Class Score extends Modele
     {
         if(!empty($idUser))
         {
-            $requete=$this->getBdd()->prepare("SELECT * FROM participer WHERE idUser = ?");
+            $requete=$this->getBdd()->prepare("SELECT * FROM scores WHERE idUser = ?");
             $requete->execute([$idUser]);
             $resultat = $requete->fetchAll(PDO::FETCH_ASSOC);
             foreach($resultat as $quizz){
@@ -37,12 +37,20 @@ Class Score extends Modele
     }
     public function creerScore($idUser,$idQuizz,$score){
         try{
-        $requete=$this->getBdd()->prepare("INSERT INTO participer (idUser,idQuizz,Score) VALUES (?,?,?) ");
+        $requete=$this->getBdd()->prepare("INSERT INTO scores (idUser,idQuizz,Score) VALUES (?,?,?) ");
 
         $requete->execute([$idUser,$idQuizz,$score]);
         return true;
         }catch(Exception $e){
             return false;
         }
+    }
+
+    public function recupScore($idUser)
+    {
+        $requete = $this -> getBdd() -> prepare("SELECT scores.idUser, quizz.Titre,scores.idQuizz, Score FROM scores INNER JOIN quizz ON scores.idQuizz = quizz.idQuizz WHERE scores.idUser = ?");
+        $requete -> execute([$idUser]);
+        $scores = $requete -> fetchAll(PDO::FETCH_ASSOC);
+        return $scores;
     }
 }

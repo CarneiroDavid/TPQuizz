@@ -7,7 +7,7 @@ $listQuizz = $quizzs -> getAllQuizz();
 ?></pre><?php
 if($_SESSION["statut"] == "Admin")
 {
-    if(empty($_GET["idQuizz"]) && empty($_GET["idUser"]))
+    if(empty($_POST["idQuizz"]) && empty($_GET["idUser"]))
     {
         ?>
         <div class="d-grid gap-2">
@@ -32,9 +32,9 @@ if($_SESSION["statut"] == "Admin")
                         if($quizz["statut"] == "attente")
                         {
                             ?>
-                            <?php
-                            echo "<p><a href='admin.php?idQuizz=$quizz[idQuizz]'>Verifier le quizz</a></p>";
-                            ?>
+                            <form method="post" action="admin.php">
+                            <p><button name='idQuizz' value='<?=$quizz['idQuizz'];?>'>Verifier le quizz</button></p>
+                            </form>
                             <form method="post" action="../traitements/accepterQuizz.php">
                                 <button type="submit" name="accepterQuizz" value="<?=$quizz["idQuizz"];?>" class="btn btn-success">Accepter</button>
                             </form>
@@ -44,13 +44,9 @@ if($_SESSION["statut"] == "Admin")
                         else
                         {
                             ?>
-                        
-                            <p style="text-decoration: underline; color : gray">Verifier le quizz</p>
-                            <fieldset disabled>
-                                <form method="post" action="../traitements/accepterQuizz.php">
-                                    <button type="submit" name="accepterQuizz" value="<?=$quizz["idQuizz"];?>" class="btn btn-success">Accepter</button>
-                                </form>
-                            </fieldset>
+                            <form method="post" action="admin.php">
+                            <p><button name='idQuizz' value='<?=$quizz['idQuizz'];?>'>Verifier le quizz</button></p>
+                            </form>
                             <p><a href="supprimerQuizz?idQuizz=<?=$quizz['idQuizz'];?>">Supprimer</a></p>
                             <?php
                         }
@@ -76,23 +72,26 @@ if($_SESSION["statut"] == "Admin")
         ?>
         <div id="allUser" style="display:block">
             <ul class="list-group">
-                <a href="formulaireInscription.php" class="list-group-item d-flex justify-content-between align-items-center">
+                <a class="btn btn-outline-primary" href="formulaireInscription.php" class="list-group-item d-flex justify-content-between align-items-center">
                     Creer Un utilisateur
                 </a>
                 <?php
                     foreach($allUser as $user)
                     {
                         ?>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <?=$user["pseudo"];?>
-                            <span class="badge bg-primary rounded-pill"></span>
-                            <span style="margin-top: 1%;">
-                                <form method="post" action="../traitements/supprimerUser.php">
-                                <a class="btn btn-warning" href="admin.php?idUser=<?=$user["idUser"];?>">Modifier</a>
-                                <a class="btn btn-danger" href="supprimerUser.php?idUser=<?=$user["idUser"];?>">Supprimer</a>
-                                </form>
-                            </span>
-                        </li>
+                        <a href="profil.php?idUser=<?=$user['idUser'];?>">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <?=$user["pseudo"];?>
+                                <span class="badge bg-primary rounded-pill"></span>
+                                <span style="margin-top: 1%;">
+                                    <form method="post" action="../traitements/supprimerUser.php">
+                                    <a class="btn btn-warning" href="admin.php?idUser=<?=$user["idUser"];?>">Modifier</a>
+                                    <a class="btn btn-danger" href="supprimerUser.php?idUser=<?=$user["idUser"];?>">Supprimer</a>
+                                    </form>
+                                </span>
+                            </li>
+                        </a>
+                        
                 <?php
                     }
                     ?>
@@ -100,12 +99,11 @@ if($_SESSION["statut"] == "Admin")
             </ul>
         </div>
         <?php
-
     }
 
-    if(!empty($_GET["idQuizz"]))
+    if(!empty($_POST["idQuizz"]))
     {
-        $quizz = new Quizz($_GET["idQuizz"]);
+        $quizz = new Quizz($_POST["idQuizz"]);
         ?>
         <h3>Vérification du quizz</h3>
         <form method="post" action="../traitements/creeQuizz.php">
@@ -113,7 +111,7 @@ if($_SESSION["statut"] == "Admin")
                 <label for="Quizz[titre]">Titre du quizz</label>
                 <input type="text" class="form-control" name="Quizz[titre]" value="<?=$quizz -> getTitreQuizz();?>">
                 <input type="hidden" class="form-control" name="Quizz[action]" value="modifier">
-                <input type="hidden" class="form-control" name="Quizz[idQuizz]" value="<?=$_GET['idQuizz'];?>">
+                <input type="hidden" class="form-control" name="Quizz[idQuizz]" value="<?=$_POST['idQuizz'];?>">
             </div>
             <div class="col-md-6">
                 <label for="Quizz[idCategorie]">Catégorie</label>
@@ -136,13 +134,7 @@ if($_SESSION["statut"] == "Admin")
             {   
                 $x = 1;
                 $reps = $question -> getReps();
-                ?>
-                <pre>
-                <?php 
-                // print_r($reps);
-                ?>
-                </pre>
-                <?php
+                
                 ?>
                 <div style="border: 1px solid black;">
                     <div class="col-md-9">
@@ -219,3 +211,33 @@ if($_SESSION["statut"] == "Admin")
 }
 require_once "pied.php";
 ?>
+<script>
+function apparitionQuizz()
+{
+    var divQuizz = document.getElementById("allQuizz");
+
+    if(divQuizz.style.display  == "none")
+    {
+        divQuizz.style.display  = "block";
+    }
+
+    else if(divQuizz.style.display  == "block")
+    {
+        divQuizz.style.display  = "none";
+    }
+}
+function apparitionUser()
+{
+    var divUser = document.getElementById("allUser");
+
+    if(divUser.style.display  == "none")
+    {
+        divUser.style.display  = "block";
+    }
+
+    else if(divUser.style.display  == "block")
+    {
+        divUser.style.display  = "none";
+    }
+}
+</script>

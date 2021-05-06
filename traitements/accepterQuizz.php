@@ -1,7 +1,7 @@
 <?php
 
 require_once "../modeles/Modele.php";
-print_r($_POST);
+// print_r($_POST);
 
 if(!empty($_POST["accepterQuizz"]))
 {
